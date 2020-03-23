@@ -9,43 +9,110 @@ export function getPost(postId) {
     .get();
 }
 
-let lastDocFetched = null;
 export class PostsByAuthor {
-  createdBy = getCreatedBy();
+  constructor() {
+    this.createdBy = getCreatedBy();
+    this.lastDocFetched = null;
+    this.canFetch = true;
+    this.fetchLimit = 25;
+  }
+
+  canFetch() {
+    return this.canFetch;
+  }
 
   get() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async resolve => {
       const ref = firebase
         .firestore()
         .collection('posts')
         .where('createdBy', '==', this.createdBy)
-        .limit(1);
+        .orderBy('createdAt', 'desc')
+        .limit(this.fetchLimit);
 
-      const ret = await ref.get();
-      lastDocFetched = ret.docs[ret.docs.length - 1];
-      resolve(ret.docs);
+      const {docs} = await ref.get();
+      const documents = this.transformList(docs);
+      resolve(documents);
     });
   }
 
   fetchMore() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async resolve => {
+      if (!this.canFetch) {
+        resolve([]);
+      }
       const ref = firebase
         .firestore()
         .collection('posts')
         .where('createdBy', '==', this.createdBy)
-        .startAfter(lastDocFetched)
-        .limit(1);
+        .orderBy('createdAt', 'desc')
+        .startAfter(this.lastDocFetched)
+        .limit(this.fetchLimit);
 
-      const ret = await ref.get();
-      lastDocFetched = ret.docs[ret.docs.length - 1];
-      resolve(ret.docs);
+      const {docs} = await ref.get();
+      const documents = this.transformList(docs);
+      resolve(documents);
     });
+  }
+
+  transformList(docs) {
+    if (docs.length < this.fetchLimit) {
+      this.lastDocFetched = docs[docs.length - 1];
+      this.canFetch = false;
+    }
+    return docs.map(doc => ({...doc.data(), id: doc.id}));
   }
 }
 
 export class AllPosts {
-  lastPostId = '';
+  constructor() {
+    this.createdBy = getCreatedBy();
+    this.lastDocFetched = null;
+    this.canFetch = true;
+    this.fetchLimit = 25;
+  }
 
-  get() {}
-  fetchMore() {}
+  canFetch() {
+    return this.canFetch;
+  }
+
+  get() {
+    return new Promise(async resolve => {
+      const ref = firebase
+        .firestore()
+        .collection('posts')
+        .orderBy('createdAt', 'desc')
+        .limit(this.fetchLimit);
+
+      const {docs} = await ref.get();
+      const documents = this.transformList(docs);
+      resolve(documents);
+    });
+  }
+
+  fetchMore() {
+    return new Promise(async resolve => {
+      if (!this.canFetch) {
+        resolve([]);
+      }
+      const ref = firebase
+        .firestore()
+        .collection('posts')
+        .orderBy('createdAt', 'desc')
+        .startAfter(this.lastDocFetched)
+        .limit(this.fetchLimit);
+
+      const {docs} = await ref.get();
+      const documents = this.transformList(docs);
+      resolve(documents);
+    });
+  }
+
+  transformList(docs) {
+    if (docs.length < this.fetchLimit) {
+      this.lastDocFetched = docs[docs.length - 1];
+      this.canFetch = false;
+    }
+    return docs.map(doc => ({...doc.data(), id: doc.id}));
+  }
 }

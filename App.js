@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback, useRef} from 'react';
 import {StatusBar, Button, Dimensions, View, Text} from 'react-native';
 import {
   createPost,
@@ -17,12 +17,13 @@ import {
   reactPost,
   registerUser,
 } from './src/db/soa';
-import {PostsByAuthor} from './src/db/query';
+import {PostsByAuthor, AllPosts} from './src/db/query';
 
 const App = () => {
   const postIdTest = '4fzmz5NtAXm49x2BPH1r';
 
-  const postByAuthorRef = new PostsByAuthor();
+  const postByAuthorRef = useRef(new AllPosts());
+  // const postByAuthorRef = useRef(new PostsByAuthor());
   const [postsByAuthor, setPostsByAuthor] = useState([]);
 
   useEffect(() => {
@@ -31,18 +32,18 @@ const App = () => {
   }, [fetchPosts]);
 
   const fetchPosts = useCallback(async () => {
-    const docs = await postByAuthorRef.get();
+    const docs = await postByAuthorRef.current.get();
     setPostsByAuthor(docs);
   }, [postByAuthorRef]);
 
   const fetchMorePosts = async () => {
-    const docs = await postByAuthorRef.fetchMore();
+    const docs = await postByAuthorRef.current.fetchMore();
     setPostsByAuthor([...postsByAuthor, ...docs]);
   };
 
   const handlePressCreatePost = async () => {
     try {
-      await createPost('Test create post');
+      await createPost('Test create post New 1');
     } catch (error) {
       console.error(error);
     }
@@ -100,7 +101,7 @@ const App = () => {
         <Button title="Create post" onPress={handlePressCreatePost} />
         <View>
           {postsByAuthor.map(post => {
-            return <Text>{post.data().message}</Text>;
+            return <Text>{post.message}</Text>;
           })}
         </View>
         <Button title="Fetch more posts" onPress={fetchMorePosts} />
