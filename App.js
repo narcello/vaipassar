@@ -6,109 +6,91 @@
  * @flow
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
+import {StatusBar, Button, Dimensions, View} from 'react-native';
 import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+  createPost,
+  deletePost,
+  favorPost,
+  disfavorPost,
+  banPost,
+  reactPost,
+  registerUser,
+} from './src/db/soa';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const App = () => {
+  useEffect(() => {
+    registerUser();
+  }, []);
 
-const App: () => React$Node = () => {
+  const postIdTest = '4fzmz5NtAXm49x2BPH1r';
+
+  const handlePressCreatePost = async () => {
+    try {
+      await createPost('Test create post');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handlePressDeletePost = async () => {
+    try {
+      await deletePost(postIdTest);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handlePressFavorPost = async () => {
+    try {
+      await favorPost(postIdTest);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handlePressDisfavorPost = async () => {
+    try {
+      await disfavorPost(postIdTest);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handlePressBanPost = async () => {
+    try {
+      await banPost(postIdTest);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handlePressReactPost = async () => {
+    try {
+      await reactPost(postIdTest, 'heart');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
+      <View
+        style={{
+          display: 'flex',
+          justifyContent: 'space-around',
+          height: Dimensions.get('window').height,
+        }}>
+        <Button title="Create post" onPress={handlePressCreatePost} />
+        <Button title="Delete post" onPress={handlePressDeletePost} />
+        <Button title="Favor post" onPress={handlePressFavorPost} />
+        <Button title="Disfavor post" onPress={handlePressDisfavorPost} />
+        <Button title="Ban post" onPress={handlePressBanPost} />
+        <Button title="React post" onPress={handlePressReactPost} />
+      </View>
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
-  },
-  engine: {
-    position: 'absolute',
-    right: 0,
-  },
-  body: {
-    backgroundColor: Colors.white,
-  },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
-});
 
 export default App;

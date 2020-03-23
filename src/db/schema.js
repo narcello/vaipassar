@@ -9,11 +9,11 @@ export const schema = {
       },
       createdAt: '',
       createdBy: '',
-      banned: 0,
+      banned: [''],
     },
   },
   // collection
-  user: {
+  users: {
     uid: {
       favorites: [''],
     },
