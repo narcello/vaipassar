@@ -1,118 +1,52 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
-import React, {useEffect, useState, useCallback, useRef} from 'react';
-import {StatusBar, Button, Dimensions, View, Text} from 'react-native';
+import React from 'react';
+import {registerUser} from './src/db/soa';
 import {
-  createPost,
-  deletePost,
-  favorPost,
-  disfavorPost,
-  banPost,
-  reactPost,
-  registerUser,
-} from './src/db/soa';
-import {PostsByAuthor, AllPosts} from './src/db/query';
+  OnBoarding,
+  Splash,
+  Timeline,
+  CreatePost,
+  AuthorArea,
+} from './src/screens';
+import {createStackNavigator} from '@react-navigation/stack';
+import {createSwitchNavigator, createAppContainer} from 'react-navigation';
+import {NavigationContainer} from '@react-navigation/native';
+
+registerUser();
+const {Navigator, Screen} = createStackNavigator();
+
+const RootNavigator = createSwitchNavigator(
+  {
+    App: () => <App />,
+    OnBoarding: OnBoarding,
+    Splash: Splash,
+  },
+  {
+    initialRouteName: 'Splash',
+  },
+);
 
 const App = () => {
-  const postIdTest = '4fzmz5NtAXm49x2BPH1r';
-
-  const postByAuthorRef = useRef(new AllPosts());
-  // const postByAuthorRef = useRef(new PostsByAuthor());
-  const [postsByAuthor, setPostsByAuthor] = useState([]);
-
-  useEffect(() => {
-    registerUser();
-    fetchPosts();
-  }, [fetchPosts]);
-
-  const fetchPosts = useCallback(async () => {
-    const docs = await postByAuthorRef.current.get();
-    setPostsByAuthor(docs);
-  }, [postByAuthorRef]);
-
-  const fetchMorePosts = async () => {
-    const docs = await postByAuthorRef.current.fetchMore();
-    setPostsByAuthor([...postsByAuthor, ...docs]);
-  };
-
-  const handlePressCreatePost = async () => {
-    try {
-      await createPost('Test create post New 1');
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handlePressDeletePost = async () => {
-    try {
-      await deletePost(postIdTest);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handlePressFavorPost = async () => {
-    try {
-      await favorPost(postIdTest);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handlePressDisfavorPost = async () => {
-    try {
-      await disfavorPost(postIdTest);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handlePressBanPost = async () => {
-    try {
-      await banPost(postIdTest);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handlePressReactPost = async () => {
-    try {
-      await reactPost(postIdTest, 'heart');
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <View
-        style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          height: Dimensions.get('window').height,
-        }}>
-        <Button title="Create post" onPress={handlePressCreatePost} />
-        <View>
-          {postsByAuthor.map(post => {
-            return <Text>{post.message}</Text>;
-          })}
-        </View>
-        <Button title="Fetch more posts" onPress={fetchMorePosts} />
-        {/* <Button title="Delete post" onPress={handlePressDeletePost} />
-        <Button title="Favor post" onPress={handlePressFavorPost} />
-        <Button title="Disfavor post" onPress={handlePressDisfavorPost} />
-        <Button title="Ban post" onPress={handlePressBanPost} />
-        <Button title="React post" onPress={handlePressReactPost} /> */}
-      </View>
-    </>
+    <NavigationContainer>
+      <Navigator initialRouteName="Timeline">
+        <Screen
+          name="Timeline"
+          options={{headerTitle: 'Posts'}}
+          component={Timeline}
+        />
+        <Screen
+          name="CreatePost"
+          options={{headerTitle: 'Criar um post'}}
+          component={CreatePost}
+        />
+        <Screen
+          name="AuthorArea"
+          options={{headerTitle: 'Meu espaço'}}
+          component={AuthorArea}
+        />
+      </Navigator>
+    </NavigationContainer>
   );
 };
 
-export default App;
+export default createAppContainer(RootNavigator);
