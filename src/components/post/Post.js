@@ -5,7 +5,8 @@ import Reaction from '../reaction/Reaction';
 const Post = ({post}) => {
   const {message, reactions} = post;
   return (
-    <View>
+    <View
+      style={{borderColor: 'gray', borderWidth: 1, padding: 5, marginTop: 100}}>
       <Text>{message}</Text>
       <Reaction reactions={reactions} />
     </View>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   Button,
   SafeAreaView,
@@ -9,27 +9,38 @@ import {
 import {postsMock} from './mock';
 import {Post} from '../../components';
 import {FlatList} from 'react-native-gesture-handler';
+import {AllPosts} from '../../db/query';
 
 const Timeline = ({navigation}) => {
+  const _AllPosts = useRef(new AllPosts());
+  const [postList, setPostList] = useState([]);
   const [fetchingLatestPosts, setFetchingLatestPosts] = useState(false);
   const [fetchingOldestPosts, setFetchingOldestPosts] = useState(false);
 
+  const initialFetch = async () => {
+    const posts = await _AllPosts.current.get();
+    setPostList(posts);
+  };
+
+  useEffect(initialFetch, []);
+
   const fetchLatestPost = () => {
     // fetch from firestore
+    setFetchingLatestPosts(true);
     setTimeout(() => {
       setFetchingLatestPosts(false);
     }, 2000);
   };
 
-  const fetchOldestPost = () => {
+  const fetchOldestPost = async () => {
     // fetch from firestore
     setFetchingOldestPosts(true);
-    setTimeout(() => {
+    try {
+      const oldestPosts = await _AllPosts.current.fetchMore();
+      setPostList([...postList, ...oldestPosts]);
       setFetchingOldestPosts(false);
-    }, 2000);
+    } catch (error) {}
   };
-
-  useEffect(fetchLatestPost, [fetchingLatestPosts]);
 
   const renderFooter = () => {
     if (!fetchingOldestPosts) {
@@ -50,23 +61,23 @@ const Timeline = ({navigation}) => {
           <RefreshControl
             colors={['red', 'green', 'pink', 'purple']}
             refreshing={fetchingLatestPosts}
-            onRefresh={() => setFetchingLatestPosts(true)}
+            onRefresh={fetchLatestPost}
           />
         }
         onEndReached={fetchOldestPost}
         onEndReachedThreshold={0.1}
         ListFooterComponent={renderFooter}
-        data={postsMock}
-        renderItem={({item}) => <Post key={item.id} post={item} />}>
-        <Button
-          title="Ir para área de criar post"
-          onPress={() => navigation.push('CreatePost')}
-        />
-        <Button
-          title="Ir para tela de 'perfil'"
-          onPress={() => navigation.push('AuthorArea')}
-        />
-      </FlatList>
+        data={postList}
+        renderItem={({item}) => <Post key={item.id} post={item} />}
+      />
+      <Button
+        title="Ir para área de criar post"
+        onPress={() => navigation.push('CreatePost')}
+      />
+      <Button
+        title="Ir para tela de 'perfil'"
+        onPress={() => navigation.push('AuthorArea')}
+      />
     </SafeAreaView>
   );
 };
