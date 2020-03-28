@@ -6,7 +6,6 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import {postsMock} from './mock';
 import {Post} from '../../components';
 import {FlatList} from 'react-native-gesture-handler';
 import {AllPosts} from '../../db/query';
@@ -17,12 +16,13 @@ const Timeline = ({navigation}) => {
   const [fetchingLatestPosts, setFetchingLatestPosts] = useState(false);
   const [fetchingOldestPosts, setFetchingOldestPosts] = useState(false);
 
-  const initialFetch = async () => {
-    const posts = await _AllPosts.current.get();
-    setPostList(posts);
-  };
-
-  useEffect(initialFetch, []);
+  useEffect(() => {
+    const initialFetch = async () => {
+      const posts = await _AllPosts.current.get();
+      setPostList(posts);
+    };
+    initialFetch();
+  }, []);
 
   const fetchLatestPost = () => {
     // fetch from firestore

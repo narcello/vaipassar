@@ -39,7 +39,7 @@ export class PostsByAuthor {
   fetchMore() {
     return new Promise(async resolve => {
       if (!this.canFetch) {
-        resolve([]);
+        return resolve([]);
       }
       const ref = firebase
         .firestore()
@@ -93,7 +93,7 @@ export class AllPosts {
   fetchMore() {
     return new Promise(async resolve => {
       if (!this.canFetch) {
-        resolve([]);
+        return resolve([]);
       }
       const ref = firebase
         .firestore()

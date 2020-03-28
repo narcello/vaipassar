@@ -5,7 +5,10 @@ const CreatePost = ({navigation}) => {
   return (
     <View>
       <Text>Create post screen</Text>
-      <Button title="Create post submit" onPress={() => navigation.pop()} />
+      <Button
+        title="Create post submit"
+        onPress={() => navigation.navigate('Posts')}
+      />
     </View>
   );
 };

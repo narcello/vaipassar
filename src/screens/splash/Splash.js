@@ -1,14 +1,21 @@
-import React, {useEffect} from 'react';
-import {View, Text} from 'react-native';
+import React from 'react';
+import {View, Text, AsyncStorage} from 'react-native';
 
 const Splash = ({navigation}) => {
-  const closeSplash = () => {
+  const handleNextRoute = async () => {
+    let nextRoute = 'App';
+    const alreadySawOnboarding = await AsyncStorage.getItem(
+      '@vaipassar.alreadySawOnboarding',
+    );
+    if (!alreadySawOnboarding) {
+      nextRoute = 'OnBoarding';
+      AsyncStorage.setItem('@vaipassar.alreadySawOnboarding', 'true');
+    }
     setTimeout(() => {
-      navigation.navigate('OnBoarding');
-    }, 2000);
+      navigation.navigate(nextRoute);
+    }, 5000);
   };
-
-  useEffect(closeSplash, []);
+  handleNextRoute();
 
   return (
     <View>
