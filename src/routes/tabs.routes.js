@@ -1,5 +1,5 @@
 import React from 'react';
-import {Timeline, MyPosts, Favorits} from '../screens';
+import {Feed, MyPosts, Favorits} from '../screens';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
 const Tab = createMaterialTopTabNavigator();
@@ -15,7 +15,7 @@ const Tabs = () => {
       }}>
       <Tab.Screen
         name="Posts"
-        component={Timeline}
+        component={Feed}
         options={{
           title: 'Feed',
         }}

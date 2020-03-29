@@ -8,9 +8,9 @@ import {
 } from 'react-native';
 import {Post, Fab} from '../../components';
 import {AllPosts} from '../../db/query';
-import {TimelineStyles} from './Timeline.styles';
+import {TimelineStyles} from './Feed.styles';
 
-const Timeline = ({navigation}) => {
+const Feed = ({navigation}) => {
   const _AllPosts = useRef(new AllPosts());
   const [postList, setPostList] = useState([]);
   const [fetchingLatestPosts, setFetchingLatestPosts] = useState(false);
@@ -75,4 +75,4 @@ const Timeline = ({navigation}) => {
   );
 };
 
-export default Timeline;
+export default Feed;
