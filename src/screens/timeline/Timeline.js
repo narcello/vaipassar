@@ -1,14 +1,14 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {
-  Button,
   SafeAreaView,
   RefreshControl,
   View,
   ActivityIndicator,
+  FlatList,
 } from 'react-native';
-import {Post} from '../../components';
-import {FlatList} from 'react-native-gesture-handler';
+import {Post, Fab} from '../../components';
 import {AllPosts} from '../../db/query';
+import {TimelineStyles} from './Timeline.styles';
 
 const Timeline = ({navigation}) => {
   const _AllPosts = useRef(new AllPosts());
@@ -55,7 +55,7 @@ const Timeline = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={TimelineStyles.container}>
       <FlatList
         refreshControl={
           <RefreshControl
@@ -70,14 +70,7 @@ const Timeline = ({navigation}) => {
         data={postList}
         renderItem={({item}) => <Post key={item.id} post={item} />}
       />
-      <Button
-        title="Ir para área de criar post"
-        onPress={() => navigation.push('CreatePost')}
-      />
-      <Button
-        title="Ir para tela de 'perfil'"
-        onPress={() => navigation.push('AuthorArea')}
-      />
+      <Fab callback={() => navigation.push('CreatePost')} />
     </SafeAreaView>
   );
 };
