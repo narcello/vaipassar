@@ -39,7 +39,7 @@ export class PostsByAuthor {
   fetchMore() {
     return new Promise(async resolve => {
       if (!this.canFetch) {
-        resolve([]);
+        return resolve([]);
       }
       const ref = firebase
         .firestore()
@@ -57,9 +57,9 @@ export class PostsByAuthor {
 
   transformList(docs) {
     if (docs.length < this.fetchLimit) {
-      this.lastDocFetched = docs[docs.length - 1];
       this.canFetch = false;
     }
+    this.lastDocFetched = docs[docs.length - 1];
     return docs.map(doc => ({...doc.data(), id: doc.id}));
   }
 }
@@ -69,7 +69,7 @@ export class AllPosts {
     this.createdBy = getCreatedBy();
     this.lastDocFetched = null;
     this.canFetch = true;
-    this.fetchLimit = 25;
+    this.fetchLimit = 5;
   }
 
   canFetch() {
@@ -93,7 +93,7 @@ export class AllPosts {
   fetchMore() {
     return new Promise(async resolve => {
       if (!this.canFetch) {
-        resolve([]);
+        return resolve([]);
       }
       const ref = firebase
         .firestore()
@@ -110,9 +110,9 @@ export class AllPosts {
 
   transformList(docs) {
     if (docs.length < this.fetchLimit) {
-      this.lastDocFetched = docs[docs.length - 1];
       this.canFetch = false;
     }
+    this.lastDocFetched = docs[docs.length - 1];
     return docs.map(doc => ({...doc.data(), id: doc.id}));
   }
 }
