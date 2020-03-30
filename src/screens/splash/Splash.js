@@ -8,7 +8,7 @@ const Splash = ({navigation}) => {
       '@vaipassar.alreadySawOnboarding',
     );
     if (!alreadySawOnboarding) {
-      // nextRoute = 'OnBoarding';
+      nextRoute = 'OnBoarding';
       AsyncStorage.setItem('@vaipassar.alreadySawOnboarding', 'true');
     }
     setTimeout(() => {
