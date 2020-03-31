@@ -1,6 +1,7 @@
 import React from 'react';
 import {Feed, MyPosts, Favorits} from '../screens';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import {colors} from '../styles/colors';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -11,7 +12,7 @@ const Tabs = () => {
         activeTintColor: 'white',
         inactiveTintColor: 'white',
         indicatorStyle: {backgroundColor: 'white'},
-        style: {backgroundColor: '#FFB40B'},
+        style: {backgroundColor: colors.yellow},
       }}>
       <Tab.Screen
         name="Posts"

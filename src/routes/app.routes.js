@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import Tabs from './tabs.routes';
 import {CreatePost} from '../screens';
 import {SafeAreaView} from 'react-native';
+import {colors} from '../styles/colors';
 
 const Stack = createStackNavigator();
 
@@ -13,7 +14,7 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            headerStyle: {backgroundColor: '#FFB40B', elevation: 0},
+            headerStyle: {backgroundColor: colors.yellow, elevation: 0},
             headerTitleAlign: 'center',
             headerTintColor: 'white',
             headerTitle: 'Vai Passar',
