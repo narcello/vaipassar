@@ -3,7 +3,7 @@ import {View, Text, AsyncStorage} from 'react-native';
 
 const Splash = ({navigation}) => {
   const handleNextRoute = async () => {
-    let nextRoute = 'OnBoarding';
+    let nextRoute = 'App';
     const alreadySawOnboarding = await AsyncStorage.getItem(
       '@vaipassar.alreadySawOnboarding',
     );

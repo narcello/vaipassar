@@ -15,7 +15,8 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     paddingBottom: 11,
-    marginTop: 50,
+    bottom: 200,
+    position: 'absolute',
   },
   text: {
     fontSize: 20,
