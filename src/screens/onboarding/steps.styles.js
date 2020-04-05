@@ -9,16 +9,16 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  button: {
-    borderWidth: 2,
-    borderColor: colors.blue,
-    borderRadius: 20,
-    padding: 10,
-    paddingBottom: 11,
-    bottom: 200,
+  close: {
+    top: 40,
+    right: 40,
     position: 'absolute',
   },
   text: {
     fontSize: 20,
+    color: colors.white,
+    textShadowColor: 'rgba(0, 0, 0, 0.25)',
+    textShadowOffset: {height: 4, width: 4},
+    textShadowRadius: 20,
   },
 });

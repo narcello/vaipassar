@@ -10,16 +10,16 @@ const Tab = createMaterialTopTabNavigator();
 
 const OnBoarding = ({navigation}) => {
   const STEPS = {
-    FIRST: 'FIRST',
-    SECOND: 'SECOND',
-    THIRD: 'THIRD',
+    ONE: 'ONE',
+    TWO: 'TWO',
+    THREE: 'THREE',
   };
 
-  const [activeStep, setActiveStep] = useState(STEPS.FIRST);
+  const [activeStep, setActiveStep] = useState(STEPS.ONE);
 
-  const styleStepFirst = styles(activeStep === STEPS.FIRST).step;
-  const styleStepSecond = styles(activeStep === STEPS.SECOND).step;
-  const styleStepThird = styles(activeStep === STEPS.THIRD).step;
+  const styleStepFirst = styles(activeStep === STEPS.ONE).step;
+  const styleStepSecond = styles(activeStep === STEPS.TWO).step;
+  const styleStepThird = styles(activeStep === STEPS.THREE).step;
   const styleStepContainer = styles().container;
 
   return (
@@ -34,18 +34,18 @@ const OnBoarding = ({navigation}) => {
           </View>
         )}>
         <Tab.Screen
-          name="FirstStep"
-          listeners={{focus: () => setActiveStep(STEPS.FIRST)}}
+          name="StepOne"
+          listeners={{focus: () => setActiveStep(STEPS.ONE)}}
           component={StepOne}
         />
         <Tab.Screen
           name="StepTwo"
-          listeners={{focus: () => setActiveStep(STEPS.SECOND)}}
+          listeners={{focus: () => setActiveStep(STEPS.TWO)}}
           component={StepTwo}
         />
         <Tab.Screen
           name="StepThree"
-          listeners={{focus: () => setActiveStep(STEPS.THIRD)}}
+          listeners={{focus: () => setActiveStep(STEPS.THREE)}}
           children={() => (
             <StepThree goToApp={() => navigation.navigate('App')} />
           )}

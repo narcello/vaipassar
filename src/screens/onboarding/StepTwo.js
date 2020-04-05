@@ -5,7 +5,7 @@ import {styles} from './steps.styles';
 const StepTwo = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Eles podem ser rápidos ou longos,</Text>
+      <Text style={styles.text}>curtos ou longos,</Text>
       <Text style={styles.text}>mas sempre passam.</Text>
     </View>
   );

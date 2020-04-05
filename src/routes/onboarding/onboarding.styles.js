@@ -13,12 +13,12 @@ export const styles = active =>
       bottom: 50,
     },
     step: {
-      width: active ? 12 : 10,
-      height: active ? 12 : 10,
+      width: 10,
+      height: 10,
       borderRadius: 6,
-      borderColor: colors.blue,
-      backgroundColor: active ? colors.blue : 'white',
-      borderWidth: 2,
+      backgroundColor: colors.white,
       margin: 1,
+      opacity: active ? 0.9 : 0.61,
+      elevation: 1,
     },
   });
