@@ -1,5 +1,7 @@
 import React from 'react';
-import {View, Text, AsyncStorage} from 'react-native';
+import {View, Text} from 'react-native';
+import {styles} from './Splash.styles';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Splash = ({navigation}) => {
   const handleNextRoute = async () => {
@@ -18,8 +20,8 @@ const Splash = ({navigation}) => {
   handleNextRoute();
 
   return (
-    <View>
-      <Text>Splash Screen</Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>Vai Passar</Text>
     </View>
   );
 };
