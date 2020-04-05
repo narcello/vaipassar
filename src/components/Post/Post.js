@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import Reaction from '../reaction/Reaction';
+import Reaction from '../Reactions/Reaction';
 import {styles} from './Post.styles';
 
 const Post = ({post}) => {

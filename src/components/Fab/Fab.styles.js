@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {colors} from '../../styles/colors';
 
-export const FabStyles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     width: 56,
