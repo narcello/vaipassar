@@ -1,20 +1,15 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import Reaction from '../reaction/Reaction';
+import {styles} from './Post.styles';
 
 const Post = ({post}) => {
   const {message, reactions} = post;
   return (
-    <View
-      style={{
-        borderColor: 'gray',
-        backgroundColor: 'white',
-        borderWidth: 1,
-        padding: 5,
-        marginTop: 100,
-        elevation: 1,
-      }}>
-      <Text>{message}</Text>
+    <View style={styles.container}>
+      <View style={styles.textArea}>
+        <Text>{message}</Text>
+      </View>
       <Reaction reactions={reactions} />
     </View>
   );
