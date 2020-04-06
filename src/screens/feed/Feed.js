@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {Post, Fab} from '../../components';
 import {AllPosts} from '../../db/query';
-import {TimelineStyles} from './Feed.styles';
+import {styles} from './Feed.styles';
 
 const Feed = ({navigation}) => {
   const _AllPosts = useRef(new AllPosts());
@@ -55,7 +55,7 @@ const Feed = ({navigation}) => {
   };
 
   return (
-    <SafeAreaView style={TimelineStyles.container}>
+    <SafeAreaView style={styles.container}>
       <FlatList
         refreshControl={
           <RefreshControl

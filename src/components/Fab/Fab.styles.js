@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
+import {colors} from '../../styles/colors';
 
-export const FabStyles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     width: 56,
@@ -9,7 +10,7 @@ export const FabStyles = StyleSheet.create({
     justifyContent: 'center',
     right: 20,
     bottom: 30,
-    backgroundColor: '#03A9F4',
+    backgroundColor: colors.blue,
     borderRadius: 30,
     elevation: 8,
   },

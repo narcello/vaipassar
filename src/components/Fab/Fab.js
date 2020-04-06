@@ -1,11 +1,11 @@
 import React from 'react';
 import {TouchableOpacity, Text} from 'react-native';
-import {FabStyles} from './Fab.styles';
+import {styles} from './Fab.styles';
 
 const Fab = ({callback}) => {
   return (
-    <TouchableOpacity onPress={callback} style={FabStyles.container}>
-      <Text style={FabStyles.content}>+</Text>
+    <TouchableOpacity onPress={callback} style={styles.container}>
+      <Text style={styles.content}>+</Text>
     </TouchableOpacity>
   );
 };
